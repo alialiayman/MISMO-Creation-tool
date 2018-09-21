@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="MismoCreator.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="LoanId" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DocumentType" Type="System.String" Scope="User">
+      <Value Profile="(Default)">1903</Value>
+    </Setting>
+    <Setting Name="PDFFileName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Select PDF File</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
