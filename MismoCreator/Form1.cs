@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -59,29 +60,44 @@ namespace MismoCreator
             using (Stream stream = assembly.GetManifestResourceStream(resourceName))
             using (StreamReader reader = new StreamReader(stream))
             {
-                string result = reader.ReadToEnd();
+                string mismoTemplate = reader.ReadToEnd();
+                var sb = new StringBuilder(mismoTemplate);
+
                 if (!string.IsNullOrEmpty(dfsLoanId.Text))
-                    result = result.Replace("{LoanId}", dfsLoanId.Text);
+                    sb.Replace("{LoanId}", dfsLoanId.Text);
+
+                if (!string.IsNullOrEmpty(dfsDocumentTypeId.Text))
+                    sb.Replace("{DocumentTypeId}", dfsDocumentTypeId.Text);
+
                 if (!string.IsNullOrEmpty(linkLabel1.Text) && linkLabel1.Text.Contains(":"))
                 {
                     var pdfContents = File.ReadAllBytes(linkLabel1.Text);
-                    result = result.Replace("{PDFContents}", Convert.ToBase64String(pdfContents));
+                    sb.Replace("{PDFContents}", Convert.ToBase64String(pdfContents));
                 }
-                if (!string.IsNullOrEmpty(dfsDocumentTypeId.Text))
-                    result = result.Replace("{DocumentTypeId}", dfsDocumentTypeId.Text);
                 if (dffHtmlEncode.Checked)
-                    dfsMismo.Text = HttpUtility.HtmlEncode(result);
-                else
-                {
-                    dfsMismo.Text = result;
-                }
+                    sb = new StringBuilder (HttpUtility.HtmlEncode(sb.ToString()));
 
                 if (dffWrapInJsonObject.Checked)
                 {
-                    dfsMismo.Text = "{MISMO: \""  + dfsMismo.Text  + "\"}";
+                    sb.Insert(0,"{MISMO: \"");
+                    sb.Append("\"}");
                 }
-                Clipboard.SetText(dfsMismo.Text);
-                tsMessage.Text = "Mismo created and copied to clipboard at " + DateTime.Now.ToString("dd-MMM-yyyy HH:mm:ss tt");
+                var mismoResult = sb.ToString();
+                Clipboard.SetText(mismoResult);
+                if (sb.Length > 1024 * 1024) //Greater than 1 MB
+                {
+                    tsMessage.Text = "Mismo created but it is too big to be displayed here, I copied it to Clibboard and wrote it to a file and opened it at " + DateTime.Now.ToString("dd-MMM-yyyy HH:mm:ss tt");
+                    var uniqueFileName = DateTime.Now.Ticks.ToString();
+                    File.WriteAllText(uniqueFileName + ".txt",mismoResult);
+                    Process.Start(uniqueFileName + ".txt");
+                }
+                else
+                {
+                    dfsMismo.Text = sb.ToString();
+                    tsMessage.Text = "Mismo created and copied to clipboard at " + DateTime.Now.ToString("dd-MMM-yyyy HH:mm:ss tt");
+                }
+                
+                
             }
 
             //var allResources = Assembly.GetExecutingAssembly().GetManifestResourceNames();
