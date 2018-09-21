@@ -1,7 +1,6 @@
 c:\Projects\MismoCreator\MismoCreator\bin\Debug\MismoCreator.exe.config
 c:\Projects\MismoCreator\MismoCreator\bin\Debug\MismoCreator.exe
 c:\Projects\MismoCreator\MismoCreator\bin\Debug\MismoCreator.pdb
-c:\Projects\MismoCreator\MismoCreator\obj\Debug\MismoCreator.csprojResolveAssemblyReference.cache
 c:\Projects\MismoCreator\MismoCreator\obj\Debug\MismoCreator.Form1.resources
 c:\Projects\MismoCreator\MismoCreator\obj\Debug\MismoCreator.Properties.Resources.resources
 c:\Projects\MismoCreator\MismoCreator\obj\Debug\MismoCreator.csproj.GenerateResource.cache
