@@ -84,20 +84,10 @@ namespace MismoCreator
                 }
                 var mismoResult = sb.ToString();
                 Clipboard.SetText(mismoResult);
-                if (sb.Length > 1024 * 1024) //Greater than 1 MB
-                {
-                    tsMessage.Text = "Mismo created but it is too big to be displayed here, I copied it to Clibboard and wrote it to a file and opened it at " + DateTime.Now.ToString("dd-MMM-yyyy HH:mm:ss tt");
-                    var uniqueFileName = DateTime.Now.Ticks.ToString();
-                    File.WriteAllText(uniqueFileName + ".txt",mismoResult);
-                    Process.Start(uniqueFileName + ".txt");
-                }
-                else
-                {
-                    dfsMismo.Text = sb.ToString();
-                    tsMessage.Text = "Mismo created and copied to clipboard at " + DateTime.Now.ToString("dd-MMM-yyyy HH:mm:ss tt");
-                }
-                
-                
+
+                MessageBox.Show("Mismo created and copied to clipboad!","Mismo Created",MessageBoxButtons.OK,MessageBoxIcon.Information);
+
+
             }
 
             //var allResources = Assembly.GetExecutingAssembly().GetManifestResourceNames();
